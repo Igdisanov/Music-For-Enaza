@@ -13,6 +13,12 @@
 		52775AB52A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52775AB32A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld */; };
 		52775AB72A9F8A730072DF4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52775AB62A9F8A730072DF4A /* Assets.xcassets */; };
 		52775ABA2A9F8A730072DF4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52775AB82A9F8A730072DF4A /* LaunchScreen.storyboard */; };
+		52775AC92A9F979E0072DF4A /* SongListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AC82A9F979E0072DF4A /* SongListViewController.swift */; };
+		52775ACB2A9F97B50072DF4A /* SongListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775ACA2A9F97B50072DF4A /* SongListPresenter.swift */; };
+		52775ACD2A9F97C50072DF4A /* SongListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775ACC2A9F97C50072DF4A /* SongListInteractor.swift */; };
+		52775ACF2A9F97D40072DF4A /* SongListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775ACE2A9F97D40072DF4A /* SongListRouter.swift */; };
+		52775AD22A9F98290072DF4A /* SongListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AD12A9F98290072DF4A /* SongListProtocols.swift */; };
+		52775AD42A9F983F0072DF4A /* SongListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AD32A9F983F0072DF4A /* SongListContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,12 @@
 		52775AB62A9F8A730072DF4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52775AB92A9F8A730072DF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52775ABB2A9F8A730072DF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52775AC82A9F979E0072DF4A /* SongListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListViewController.swift; sourceTree = "<group>"; };
+		52775ACA2A9F97B50072DF4A /* SongListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListPresenter.swift; sourceTree = "<group>"; };
+		52775ACC2A9F97C50072DF4A /* SongListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListInteractor.swift; sourceTree = "<group>"; };
+		52775ACE2A9F97D40072DF4A /* SongListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListRouter.swift; sourceTree = "<group>"; };
+		52775AD12A9F98290072DF4A /* SongListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListProtocols.swift; sourceTree = "<group>"; };
+		52775AD32A9F983F0072DF4A /* SongListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +68,85 @@
 		52775AA92A9F8A710072DF4A /* Music For Enaza */ = {
 			isa = PBXGroup;
 			children = (
+				52775AD02A9F97E30072DF4A /* Models */,
+				52775AC52A9F939A0072DF4A /* Modules */,
+				52775AC12A9F927A0072DF4A /* App Delegate */,
+				52775AAE2A9F8A710072DF4A /* ViewController.swift */,
+				52775AC22A9F92930072DF4A /* Resources */,
+				52775AC32A9F92AA0072DF4A /* Launch Screen */,
+				52775AC42A9F92D70072DF4A /* Supporting Files */,
+			);
+			path = "Music For Enaza";
+			sourceTree = "<group>";
+		};
+		52775AC12A9F927A0072DF4A /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
 				52775AAA2A9F8A710072DF4A /* AppDelegate.swift */,
 				52775AAC2A9F8A710072DF4A /* SceneDelegate.swift */,
-				52775AAE2A9F8A710072DF4A /* ViewController.swift */,
+			);
+			path = "App Delegate";
+			sourceTree = "<group>";
+		};
+		52775AC22A9F92930072DF4A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				52775AB62A9F8A730072DF4A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		52775AC32A9F92AA0072DF4A /* Launch Screen */ = {
+			isa = PBXGroup;
+			children = (
 				52775AB82A9F8A730072DF4A /* LaunchScreen.storyboard */,
+			);
+			path = "Launch Screen";
+			sourceTree = "<group>";
+		};
+		52775AC42A9F92D70072DF4A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				52775ABB2A9F8A730072DF4A /* Info.plist */,
 				52775AB32A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld */,
 			);
-			path = "Music For Enaza";
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52775AC52A9F939A0072DF4A /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				52775AC62A9F93EB0072DF4A /* SongList */,
+				52775AC72A9F94800072DF4A /* MusicPlayer */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		52775AC62A9F93EB0072DF4A /* SongList */ = {
+			isa = PBXGroup;
+			children = (
+				52775AC82A9F979E0072DF4A /* SongListViewController.swift */,
+				52775ACC2A9F97C50072DF4A /* SongListInteractor.swift */,
+				52775ACA2A9F97B50072DF4A /* SongListPresenter.swift */,
+				52775ACE2A9F97D40072DF4A /* SongListRouter.swift */,
+				52775AD12A9F98290072DF4A /* SongListProtocols.swift */,
+				52775AD32A9F983F0072DF4A /* SongListContainer.swift */,
+			);
+			path = SongList;
+			sourceTree = "<group>";
+		};
+		52775AC72A9F94800072DF4A /* MusicPlayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MusicPlayer;
+			sourceTree = "<group>";
+		};
+		52775AD02A9F97E30072DF4A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,10 +219,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52775AD42A9F983F0072DF4A /* SongListContainer.swift in Sources */,
 				52775AAF2A9F8A710072DF4A /* ViewController.swift in Sources */,
 				52775AB52A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld in Sources */,
 				52775AAB2A9F8A710072DF4A /* AppDelegate.swift in Sources */,
+				52775ACF2A9F97D40072DF4A /* SongListRouter.swift in Sources */,
+				52775ACB2A9F97B50072DF4A /* SongListPresenter.swift in Sources */,
+				52775AD22A9F98290072DF4A /* SongListProtocols.swift in Sources */,
+				52775ACD2A9F97C50072DF4A /* SongListInteractor.swift in Sources */,
 				52775AAD2A9F8A710072DF4A /* SceneDelegate.swift in Sources */,
+				52775AC92A9F979E0072DF4A /* SongListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +369,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8BZBKDJH8Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Music For Enaza/Info.plist";
+				INFOPLIST_FILE = "Music For Enaza/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -309,7 +397,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8BZBKDJH8Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Music For Enaza/Info.plist";
+				INFOPLIST_FILE = "Music For Enaza/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
