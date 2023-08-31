@@ -15,9 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         let myWindow = UIWindow(windowScene: windowScene)
+        let navigationController = UINavigationController()
         let songListVC = SongListContainer.assemble(with: SongListContext()).viewController
-        myWindow.rootViewController = UINavigationController(rootViewController: songListVC)
+        
+        navigationController.viewControllers = [songListVC]
+        myWindow.rootViewController = navigationController
+        
         self.window = myWindow
         myWindow.makeKeyAndVisible()
     }
