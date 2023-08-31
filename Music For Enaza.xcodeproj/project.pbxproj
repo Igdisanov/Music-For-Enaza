@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		52775AAB2A9F8A710072DF4A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AAA2A9F8A710072DF4A /* AppDelegate.swift */; };
 		52775AAD2A9F8A710072DF4A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AAC2A9F8A710072DF4A /* SceneDelegate.swift */; };
-		52775AAF2A9F8A710072DF4A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AAE2A9F8A710072DF4A /* ViewController.swift */; };
 		52775AB52A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52775AB32A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld */; };
 		52775AB72A9F8A730072DF4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52775AB62A9F8A730072DF4A /* Assets.xcassets */; };
 		52775ABA2A9F8A730072DF4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52775AB82A9F8A730072DF4A /* LaunchScreen.storyboard */; };
@@ -19,13 +18,19 @@
 		52775ACF2A9F97D40072DF4A /* SongListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775ACE2A9F97D40072DF4A /* SongListRouter.swift */; };
 		52775AD22A9F98290072DF4A /* SongListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AD12A9F98290072DF4A /* SongListProtocols.swift */; };
 		52775AD42A9F983F0072DF4A /* SongListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AD32A9F983F0072DF4A /* SongListContainer.swift */; };
+		52775AD72A9FA7770072DF4A /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52775AD62A9FA7770072DF4A /* SongCell.swift */; };
+		529178C12AA0C83B00804D78 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529178C02AA0C83B00804D78 /* MusicPlayerViewController.swift */; };
+		529178C32AA0C84800804D78 /* MusicPlayerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529178C22AA0C84800804D78 /* MusicPlayerPresenter.swift */; };
+		529178C52AA0C87200804D78 /* MusicPlayerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529178C42AA0C87200804D78 /* MusicPlayerInteractor.swift */; };
+		529178C72AA0C88100804D78 /* MusicPlayerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529178C62AA0C88100804D78 /* MusicPlayerRouter.swift */; };
+		529178C92AA0C89900804D78 /* MusicPlayerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529178C82AA0C89900804D78 /* MusicPlayerProtocols.swift */; };
+		529178CB2AA0C8AC00804D78 /* MusicPlayerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529178CA2AA0C8AC00804D78 /* MusicPlayerContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		52775AA72A9F8A710072DF4A /* Music For Enaza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Music For Enaza.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52775AAA2A9F8A710072DF4A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52775AAC2A9F8A710072DF4A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		52775AAE2A9F8A710072DF4A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52775AB42A9F8A710072DF4A /* Music_For_Enaza.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Music_For_Enaza.xcdatamodel; sourceTree = "<group>"; };
 		52775AB62A9F8A730072DF4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52775AB92A9F8A730072DF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +41,13 @@
 		52775ACE2A9F97D40072DF4A /* SongListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListRouter.swift; sourceTree = "<group>"; };
 		52775AD12A9F98290072DF4A /* SongListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListProtocols.swift; sourceTree = "<group>"; };
 		52775AD32A9F983F0072DF4A /* SongListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListContainer.swift; sourceTree = "<group>"; };
+		52775AD62A9FA7770072DF4A /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
+		529178C02AA0C83B00804D78 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
+		529178C22AA0C84800804D78 /* MusicPlayerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerPresenter.swift; sourceTree = "<group>"; };
+		529178C42AA0C87200804D78 /* MusicPlayerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerInteractor.swift; sourceTree = "<group>"; };
+		529178C62AA0C88100804D78 /* MusicPlayerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerRouter.swift; sourceTree = "<group>"; };
+		529178C82AA0C89900804D78 /* MusicPlayerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerProtocols.swift; sourceTree = "<group>"; };
+		529178CA2AA0C8AC00804D78 /* MusicPlayerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,10 +80,9 @@
 		52775AA92A9F8A710072DF4A /* Music For Enaza */ = {
 			isa = PBXGroup;
 			children = (
-				52775AD02A9F97E30072DF4A /* Models */,
-				52775AC52A9F939A0072DF4A /* Modules */,
 				52775AC12A9F927A0072DF4A /* App Delegate */,
-				52775AAE2A9F8A710072DF4A /* ViewController.swift */,
+				52775AC52A9F939A0072DF4A /* Modules */,
+				52775AD02A9F97E30072DF4A /* Models */,
 				52775AC22A9F92930072DF4A /* Resources */,
 				52775AC32A9F92AA0072DF4A /* Launch Screen */,
 				52775AC42A9F92D70072DF4A /* Supporting Files */,
@@ -125,6 +136,7 @@
 		52775AC62A9F93EB0072DF4A /* SongList */ = {
 			isa = PBXGroup;
 			children = (
+				52775AD52A9FA75C0072DF4A /* Cells */,
 				52775AC82A9F979E0072DF4A /* SongListViewController.swift */,
 				52775ACC2A9F97C50072DF4A /* SongListInteractor.swift */,
 				52775ACA2A9F97B50072DF4A /* SongListPresenter.swift */,
@@ -138,6 +150,12 @@
 		52775AC72A9F94800072DF4A /* MusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				529178C02AA0C83B00804D78 /* MusicPlayerViewController.swift */,
+				529178C22AA0C84800804D78 /* MusicPlayerPresenter.swift */,
+				529178C42AA0C87200804D78 /* MusicPlayerInteractor.swift */,
+				529178C62AA0C88100804D78 /* MusicPlayerRouter.swift */,
+				529178C82AA0C89900804D78 /* MusicPlayerProtocols.swift */,
+				529178CA2AA0C8AC00804D78 /* MusicPlayerContainer.swift */,
 			);
 			name = MusicPlayer;
 			sourceTree = "<group>";
@@ -147,6 +165,14 @@
 			children = (
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		52775AD52A9FA75C0072DF4A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				52775AD62A9FA7770072DF4A /* SongCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,15 +246,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				52775AD42A9F983F0072DF4A /* SongListContainer.swift in Sources */,
-				52775AAF2A9F8A710072DF4A /* ViewController.swift in Sources */,
+				529178C72AA0C88100804D78 /* MusicPlayerRouter.swift in Sources */,
 				52775AB52A9F8A710072DF4A /* Music_For_Enaza.xcdatamodeld in Sources */,
 				52775AAB2A9F8A710072DF4A /* AppDelegate.swift in Sources */,
+				529178C32AA0C84800804D78 /* MusicPlayerPresenter.swift in Sources */,
 				52775ACF2A9F97D40072DF4A /* SongListRouter.swift in Sources */,
+				529178CB2AA0C8AC00804D78 /* MusicPlayerContainer.swift in Sources */,
 				52775ACB2A9F97B50072DF4A /* SongListPresenter.swift in Sources */,
+				529178C92AA0C89900804D78 /* MusicPlayerProtocols.swift in Sources */,
 				52775AD22A9F98290072DF4A /* SongListProtocols.swift in Sources */,
 				52775ACD2A9F97C50072DF4A /* SongListInteractor.swift in Sources */,
 				52775AAD2A9F8A710072DF4A /* SceneDelegate.swift in Sources */,
+				52775AD72A9FA7770072DF4A /* SongCell.swift in Sources */,
+				529178C12AA0C83B00804D78 /* MusicPlayerViewController.swift in Sources */,
 				52775AC92A9F979E0072DF4A /* SongListViewController.swift in Sources */,
+				529178C52AA0C87200804D78 /* MusicPlayerInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
