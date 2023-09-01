@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class MusicPlayerViewController: UIViewController {
     
@@ -20,35 +21,50 @@ class MusicPlayerViewController: UIViewController {
     
     private lazy var plaingButton: UIButton = {
        let button = UIButton()
-//        button.addTarget(self, action: #selector(goBackAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(playingAction), for: .touchUpInside)
         button.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        button.tintColor = UIColor(named: "buttonColor")
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var nextSongButton: UIButton = {
        let button = UIButton()
+        button.addTarget(self, action: #selector(nextSong), for: .touchUpInside)
         button.setImage(UIImage(systemName: "forward.end.fill"), for: .normal)
+        button.tintColor = UIColor(named: "buttonColor")
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var previousSongButton: UIButton = {
        let button = UIButton()
+        button.addTarget(self, action: #selector(previousSong), for: .touchUpInside)
         button.setImage(UIImage(systemName: "backward.end.fill"), for: .normal)
+        button.tintColor = UIColor(named: "buttonColor")
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var songSlider: UISlider = {
         let slider = UISlider()
+        slider.addTarget(self, action: #selector(rewindSong), for: .allEvents)
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
     
+    private lazy var songNameLable: UILabel = {
+        let label = UILabel()
+        label.text = "Вадим"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
-     
+    
+    private var player: AVPlayer!
     private let uotput: MusicPlayerViewOutput
+    private var songList = ["music1", "music2", "music3", "music4", "music5"]
+    private var currentSong: Int?
     
     init(uotput: MusicPlayerViewOutput) {
         self.uotput = uotput
@@ -59,10 +75,54 @@ class MusicPlayerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        playMusic(number: 0)
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setupUI()
     }
+    
+    @objc func playingAction() {
+        if  player.timeControlStatus == .paused {
+            player.play()
+            plaingButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        } else {
+            player.pause()
+            plaingButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        }
+    }
+    
+    @objc func rewindSong() {
+        player.seek(to: CMTime(seconds: Double(songSlider.value), preferredTimescale: 1000))
+    }
+    
+    @objc func nextSong() {
+        guard let currentSong = self.currentSong, currentSong != songList.count - 1 else { return }
+        playMusic(number: currentSong + 1)
+        player.play()
+    }
+    
+    @objc func previousSong() {
+        guard let currentSong = self.currentSong, currentSong != 0 else { return }
+        playMusic(number: currentSong - 1)
+        player.play()
+    }
+    
+    private func playMusic(number: Int?) {
+        currentSong = number
+        guard let number = number ,let song = Bundle.main.path(forResource: songList[number], ofType: "mp3") else { return }
+        player = AVPlayer(url: URL(fileURLWithPath: song))
+        
+        guard let durationSong = player.currentItem?.asset.duration.seconds else { return }
+        songSlider.maximumValue = Float(durationSong)
+        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1000), queue: DispatchQueue.main) { (time) in
+            self.songSlider.value = Float(time.seconds)
+        }
+    }
+    
     
     private func setupUI() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
@@ -71,6 +131,7 @@ class MusicPlayerViewController: UIViewController {
         setupNexSongButton()
         setupPreviousSongButton()
         setupSongSlider()
+        setupSongNameLable()
     }
     
     private func setupSongImageView() {
@@ -125,6 +186,12 @@ class MusicPlayerViewController: UIViewController {
         songSlider.bottomAnchor.constraint(equalTo: plaingButton.topAnchor, constant: -32).isActive = true
         songSlider.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
         songSlider.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
+    }
+    
+    private func setupSongNameLable() {
+        self.view.addSubview(songNameLable)
+        songNameLable.bottomAnchor.constraint(equalTo: songSlider.topAnchor, constant: -16).isActive = true
+        songNameLable.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
     }
 }
 
