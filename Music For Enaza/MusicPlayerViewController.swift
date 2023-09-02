@@ -10,6 +10,8 @@ import MediaPlayer
 
 class MusicPlayerViewController: UIViewController {
     
+    // MARK: - Visual Components
+    
     private lazy var songImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 10
@@ -60,9 +62,12 @@ class MusicPlayerViewController: UIViewController {
         return label
     }()
     
+    // MARK: - Private Properties
     
     private var player: AVPlayer!
     private let otput: MusicPlayerViewOutput
+    
+    // MARK: - Initializers
     
     init(uotput: MusicPlayerViewOutput) {
         self.otput = uotput
@@ -87,6 +92,8 @@ class MusicPlayerViewController: UIViewController {
         super.viewWillDisappear(animated)
         player.pause()
     }
+    
+    // MARK: - Action Methods
     
     @objc func playingAction() {
         if  player.timeControlStatus == .paused {
@@ -114,6 +121,8 @@ class MusicPlayerViewController: UIViewController {
         player.play()
     }
     
+    // MARK: - Private Methods
+    
     private func playMusic(song: String) {
         guard let song = Bundle.main.path(forResource: song, ofType: "mp3") else { return }
         player = AVPlayer(url: URL(fileURLWithPath: song))
@@ -128,6 +137,7 @@ class MusicPlayerViewController: UIViewController {
         }
     }
     
+    // MARK: - Setup UI
     
     private func setupUI() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
@@ -199,6 +209,8 @@ class MusicPlayerViewController: UIViewController {
         songNameLable.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
     }
 }
+
+// MARK: - MusicPlayerViewInput
 
 extension MusicPlayerViewController: MusicPlayerViewInput {
     

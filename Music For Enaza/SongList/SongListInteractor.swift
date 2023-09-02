@@ -8,6 +8,7 @@
 import Foundation
 
 class SongListInteractor {
+    
     weak var output: SongListInteractorOutput?
     private let networkDataFetcher: NetworkFetcherProtocol
     private let collectionURL = "https://api.mobimusic.kz/?method=product.getCard&productId=234234"
