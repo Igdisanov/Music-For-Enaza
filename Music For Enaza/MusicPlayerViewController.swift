@@ -80,13 +80,14 @@ class MusicPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         otput.requestTrack()
 
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        setupUI()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

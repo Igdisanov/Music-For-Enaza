@@ -46,13 +46,16 @@ class SongListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         activityIndicator.startAnimating()
         requestData()
+    
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setupUI()
+//        setupUI()
+        print("QQQQQQQQQQQQ")
     }
     
     // MARK: - Private Methods
@@ -85,7 +88,6 @@ class SongListViewController: UIViewController {
     private func setupUI() {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.view.backgroundColor = UIColor(named: "backgroundColor")
-        self.view.addSubview(songTableView)
         setupAlbomImageView()
         setupSongTableView()
         setupActivityIndicator()
@@ -95,7 +97,7 @@ class SongListViewController: UIViewController {
         albomImageView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(albomImageView)
         albomImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        albomImageView.topAnchor.constraint(equalTo: (self.navigationController?.navigationBar.bottomAnchor)!, constant: 8).isActive = true
+        albomImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         albomImageView.widthAnchor.constraint(equalToConstant: self.view.frame.width / 1.5).isActive = true
         albomImageView.heightAnchor.constraint(equalTo: albomImageView.widthAnchor).isActive = true
     }
