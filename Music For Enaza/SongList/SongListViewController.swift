@@ -11,29 +11,24 @@ class SongListViewController: UIViewController {
     
     private lazy var albomImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 10
         imageView.backgroundColor = UIColor(named: "backgroundColor")
         imageView.image = UIImage(systemName: "music.note.house.fill")
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private lazy var contentScrollView: UIScrollView = {
-        let scrollView = UIScrollView(frame: self.view.bounds)
-        scrollView.backgroundColor = UIColor(named: "backgroundColor")
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        return activity
     }()
     
     private lazy var songTableView = UITableView(frame: .zero, style: .plain)
+    
     private let output: SongListViewOutput
+    private var collection: Collection?
     
     init(output: SongListViewOutput) {
         self.output = output
@@ -46,6 +41,8 @@ class SongListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.startAnimating()
+        requestData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,30 +50,34 @@ class SongListViewController: UIViewController {
         setupUI()
     }
     
+    private func requestData() {
+        output.collectionRequest { [weak self] (collection) in
+            self?.collection = collection
+            self?.output.getImageAlbum { [weak self] (data) in
+                guard let data = data else {return}
+                DispatchQueue.main.async {
+                    self?.albomImageView.image = UIImage(data: data)
+                    self?.songTableView.reloadData()
+                    self?.activityIndicator.stopAnimating()
+                }
+            }
+        }
+    }
+    
+    private func getTrackList() -> [Track] {
+        var tracks = [Track]()
+        guard let collection = collection else {return []}
+        for (_, value) in collection.track {
+            tracks.append(value)
+        }
+        return tracks
+    }
+    
     private func setupUI() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
-//        setupContentScrollView()
-//        setupContentView()
         setupAlbomImageView()
         setupSongTableView()
-//        contentScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.contentView.frame.height + self.songTableView.frame.height)
-        
-    }
-    
-    private func setupContentScrollView() {
-        self.view.addSubview(contentScrollView)
-        contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-    }
-    
-    private func setupContentView() {
-        self.contentScrollView.addSubview(contentView)
-        contentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor).isActive = true
-        contentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor).isActive = true
-        contentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor).isActive = true
-        contentView.heightAnchor.constraint(equalToConstant: self.view.frame.height/2).isActive = true
+        setupActivityIndicator()
     }
     
     private func setupAlbomImageView() {
@@ -101,6 +102,12 @@ class SongListViewController: UIViewController {
         songTableView.dataSource = self
     }
     
+    private func setupActivityIndicator() {
+        self.view.addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        activityIndicator.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+    }
+    
 }
 
 extension SongListViewController: SongListViewInput {
@@ -110,12 +117,13 @@ extension SongListViewController: SongListViewInput {
 extension SongListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        collection?.track.count ??  0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SongViewCell.className, for: indexPath) as! SongViewCell
-        cell.configure()
+        let tracks = getTrackList()
+        cell.configure(track: tracks[indexPath.row])
         return cell
     }
     
@@ -124,12 +132,13 @@ extension SongListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Топ Узбекистан"
+        self.collection?.album.first?.value.name
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let musicPlayerVC = MusicPlayerContainer.assemble(with: MusicPlayerContext()).viewController
-        self.navigationController?.pushViewController(musicPlayerVC, animated: true)
+        let trackList = getTrackList()
+        let currentTrack = trackList[indexPath.row]
+        self.output.pushViewController(view: self, trackList: trackList, currentTrack: currentTrack)
     }
     
 }

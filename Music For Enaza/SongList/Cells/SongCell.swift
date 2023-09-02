@@ -23,11 +23,15 @@ class SongViewCell: UITableViewCell {
         return label
     }()
     
+    private let networkDataFetcher: NetworkFetcherProtocol?
+    
     // MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        self.networkDataFetcher = NetworkDataFetcher()
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -40,9 +44,16 @@ class SongViewCell: UITableViewCell {
         self.songNameLable.text = nil
     }
     
-    public func configure() {
-        self.songNameLable.text = "Vadim"
-        self.songImageView.image = UIImage(systemName: "music.note.house.fill")
+    public func configure(track: Track) {
+        self.songNameLable.text = track.name
+        guard let cover = track.coverUrl else {return}
+        networkDataFetcher?.fetchImage(cover: cover, completion: { (data) in
+            guard let data = data as? Data else {return}
+            DispatchQueue.main.async {
+                self.songImageView.image = UIImage(data: data)
+            }
+        })
+        
     }
     
     // MARK: - Setup UI

@@ -14,7 +14,7 @@ final class MusicPlayerContainer {
     
     static func assemble(with context: MusicPlayerContext) -> MusicPlayerContainer {
         let router = MusicPlayerRouter()
-        let interactor = MusicPlayerInteractor()
+        let interactor = MusicPlayerInteractor(context: context)
         let presenter = MusicPlayerPresenter(router: router, interactor: interactor)
         let viewController = MusicPlayerViewController(uotput: presenter)
         
@@ -36,5 +36,7 @@ final class MusicPlayerContainer {
 
 struct MusicPlayerContext {
     weak var moduleOutput: MusicPlayerModuleOutput?
+    let trackList: [Track]
+    let currentTrack: Track
 }
  

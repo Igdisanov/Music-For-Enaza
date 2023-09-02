@@ -27,8 +27,31 @@ extension MusicPlayerPresenter: MusicPlayerModuleInput {
 
 extension MusicPlayerPresenter: MusicPlayerViewOutput {
     
+    func requestImage(cover: String) {
+        interactor.requestImage(cover: cover)
+    }
+    
+    func requestTrack() {
+        interactor.requestTrack()
+    }
+    
+    func requestNextSong() {
+        interactor.requestNextSong()
+    }
+    
+    func requestpreviousSong() {
+        interactor.requestpreviousSong()
+    }
+    
 }
 
 extension MusicPlayerPresenter: MusicPlayerInteractorOutput {
     
+    func getImageData(data: Data?) {
+        view?.getImageData(data: data)
+    }
+    
+    func getTrack(location: LocationTrack?, track: Track) {
+        view?.getTrack(location: location, track: track)
+    }
 }

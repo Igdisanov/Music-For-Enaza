@@ -11,5 +11,11 @@ class SongListRouter {
 }
 
 extension SongListRouter: SongListRouterInput {
+    
+    func pushViewController(view: UIViewController, trackList: [Track], currentTrack: Track) {
+        let context = MusicPlayerContext(trackList: trackList, currentTrack: currentTrack)
+        let musicPlayerVC = MusicPlayerContainer.assemble(with: context).viewController
+        view.navigationController?.pushViewController(musicPlayerVC, animated: true)
+    }
 }
 
