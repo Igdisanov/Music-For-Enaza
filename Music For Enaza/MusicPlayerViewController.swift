@@ -81,6 +81,7 @@ class MusicPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         otput.requestTrack()
+
     }
     
     override func viewWillLayoutSubviews() {
@@ -110,13 +111,13 @@ class MusicPlayerViewController: UIViewController {
     }
     
     @objc func nextSong() {
-        self.previousSongButton.tintColor = UIColor(named: "buttonColor")
+        self.previousSongButton.isEnabled = true
         self.otput.requestNextSong()
         player.play()
     }
     
     @objc func previousSong() {
-        self.nextSongButton.tintColor = UIColor(named: "buttonColor")
+        self.nextSongButton.isEnabled = true
         self.otput.requestpreviousSong()
         player.play()
     }
@@ -126,14 +127,10 @@ class MusicPlayerViewController: UIViewController {
     private func playMusic(song: String) {
         guard let song = Bundle.main.path(forResource: song, ofType: "mp3") else { return }
         player = AVPlayer(url: URL(fileURLWithPath: song))
-        
         guard let durationSong = player.currentItem?.asset.duration.seconds else { return }
         songSlider.maximumValue = Float(durationSong)
         player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1000), queue: DispatchQueue.main) { [weak self] (time) in
             self?.songSlider.value = Float(time.seconds)
-            if self?.songSlider.value ==  self?.songSlider.maximumValue {
-                self?.nextSong()
-            }
         }
     }
     
@@ -223,12 +220,12 @@ extension MusicPlayerViewController: MusicPlayerViewInput {
         otput.requestImage(cover: coverUrl)
         
         if location == .first {
-            self.previousSongButton.tintColor = .gray
+            self.previousSongButton.isEnabled = false
         } else if location == .last {
-            self.nextSongButton.tintColor = .gray
+            self.nextSongButton.isEnabled = false
         } else {
-            self.previousSongButton.tintColor = UIColor(named: "buttonColor")
-            self.nextSongButton.tintColor = UIColor(named: "buttonColor")
+            self.previousSongButton.isEnabled = true
+            self.nextSongButton.isEnabled = true
         }
     }
     

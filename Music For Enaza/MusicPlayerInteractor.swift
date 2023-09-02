@@ -54,9 +54,9 @@ extension MusicPlayerInteractor: MusicPlayerInteractorInput {
         guard let trackList = self.trackList, let index = currentTrackIndex else {return}
         if index != trackList.count - 1 {
             let currentIndex = index + 1
-            let location = getLocation()
             self.currentTrackIndex = currentIndex
             self.currentTrack = trackList[currentIndex]
+            let location = getLocation()
             self.output?.getTrack(location: location,track: trackList[currentIndex])
         }
     }
@@ -65,9 +65,9 @@ extension MusicPlayerInteractor: MusicPlayerInteractorInput {
         guard let trackList = self.trackList, let index = currentTrackIndex else {return}
         if index != 0 {
             let currentIndex = index - 1
-            let location = getLocation()
             self.currentTrackIndex = currentIndex
             self.currentTrack = trackList[currentIndex]
+            let location = getLocation()
             self.output?.getTrack(location: location,track: trackList[currentIndex])
         }
     }

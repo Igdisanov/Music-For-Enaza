@@ -17,7 +17,6 @@ class SongListViewController: UIViewController {
         imageView.image = UIImage(systemName: "music.note.house.fill")
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -84,13 +83,16 @@ class SongListViewController: UIViewController {
     // MARK: - Setup UI
     
     private func setupUI() {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.view.backgroundColor = UIColor(named: "backgroundColor")
+        self.view.addSubview(songTableView)
         setupAlbomImageView()
         setupSongTableView()
         setupActivityIndicator()
     }
     
     private func setupAlbomImageView() {
+        albomImageView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(albomImageView)
         albomImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         albomImageView.topAnchor.constraint(equalTo: (self.navigationController?.navigationBar.bottomAnchor)!, constant: 8).isActive = true
@@ -100,8 +102,8 @@ class SongListViewController: UIViewController {
     
     private func setupSongTableView() {
         songTableView.translatesAutoresizingMaskIntoConstraints = false
-        songTableView.backgroundColor = UIColor(named: "backgroundColor")
         self.view.addSubview(songTableView)
+        songTableView.backgroundColor = UIColor(named: "backgroundColor")
         songTableView.topAnchor.constraint(equalTo: albomImageView.bottomAnchor, constant: 16).isActive = true
         songTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         songTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
