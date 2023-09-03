@@ -67,6 +67,13 @@ class MusicPlayerViewController: UIViewController {
     private var player: AVPlayer!
     private let otput: MusicPlayerViewOutput
     
+    // MARK: - Constraints
+    
+    private var songImageViewTopAnchor: NSLayoutConstraint?
+    private var songImageViewСenterXAnchor: NSLayoutConstraint?
+    private var songImageViewWidthAnchor: NSLayoutConstraint?
+    private var songImageViewHeightAnchor: NSLayoutConstraint?
+    
     // MARK: - Initializers
     
     init(uotput: MusicPlayerViewOutput) {
@@ -82,7 +89,7 @@ class MusicPlayerViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         otput.requestTrack()
-
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -93,6 +100,32 @@ class MusicPlayerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         player.pause()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        let orientation = windowScene.interfaceOrientation
+        
+        if orientation == .landscapeLeft || orientation == .landscapeRight {
+            coordinator.animate { [weak self] _ in
+                guard let self = self else {return}
+                
+                self.songImageViewWidthAnchor?.constant = 130
+                self.songImageViewHeightAnchor?.constant = 130
+            }
+            
+        } else if orientation == .portrait {
+            
+            coordinator.animate { [weak self] _ in
+                guard let self = self else {return}
+                
+                self.songImageViewWidthAnchor?.constant = 250
+                self.songImageViewHeightAnchor?.constant = 250
+            }
+        }
+        
     }
     
     // MARK: - Action Methods
@@ -149,15 +182,19 @@ class MusicPlayerViewController: UIViewController {
     
     private func setupSongImageView() {
         self.view.addSubview(songImageView)
-        songImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        songImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
-        songImageView.widthAnchor.constraint(equalToConstant: self.view.frame.width / 1.5).isActive = true
-        songImageView.heightAnchor.constraint(equalTo: songImageView.widthAnchor).isActive = true
+        songImageViewTopAnchor = songImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8)
+        songImageViewСenterXAnchor = songImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        songImageViewHeightAnchor = songImageView.heightAnchor.constraint(equalToConstant: 250)
+        songImageViewWidthAnchor = songImageView.widthAnchor.constraint(equalToConstant: 250)
+        songImageViewTopAnchor?.isActive = true
+        songImageViewСenterXAnchor?.isActive = true
+        songImageViewWidthAnchor?.isActive = true
+        songImageViewHeightAnchor?.isActive = true
     }
     
     private func setupPlaingButton() {
         self.view.addSubview(plaingButton)
-        plaingButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -32).isActive = true
+        plaingButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -24).isActive = true
         plaingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         plaingButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
         plaingButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
