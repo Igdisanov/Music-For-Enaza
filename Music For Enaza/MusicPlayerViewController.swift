@@ -112,8 +112,8 @@ class MusicPlayerViewController: UIViewController {
             coordinator.animate { [weak self] _ in
                 guard let self = self else {return}
                 
-                self.songImageViewWidthAnchor?.constant = 130
-                self.songImageViewHeightAnchor?.constant = 130
+                self.songImageViewWidthAnchor?.constant = 150
+                self.songImageViewHeightAnchor?.constant = 150
             }
             
         } else if orientation == .portrait {
@@ -173,19 +173,29 @@ class MusicPlayerViewController: UIViewController {
     private func setupUI() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
         setupSongImageView()
+        setupSongNameLable()
+        setupSongSlider()
         setupPlaingButton()
         setupNexSongButton()
         setupPreviousSongButton()
-        setupSongSlider()
-        setupSongNameLable()
     }
     
     private func setupSongImageView() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        let orientation = windowScene.interfaceOrientation
         self.view.addSubview(songImageView)
+        
+        if orientation.isPortrait {
+            songImageViewHeightAnchor = songImageView.heightAnchor.constraint(equalToConstant: 250)
+            songImageViewWidthAnchor = songImageView.widthAnchor.constraint(equalToConstant: 250)
+        } else if orientation.isLandscape {
+            songImageViewHeightAnchor = songImageView.heightAnchor.constraint(equalToConstant: 150)
+            songImageViewWidthAnchor = songImageView.widthAnchor.constraint(equalToConstant: 150)
+        }
+        
         songImageViewTopAnchor = songImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8)
         songImageViewСenterXAnchor = songImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        songImageViewHeightAnchor = songImageView.heightAnchor.constraint(equalToConstant: 250)
-        songImageViewWidthAnchor = songImageView.widthAnchor.constraint(equalToConstant: 250)
+        
         songImageViewTopAnchor?.isActive = true
         songImageViewСenterXAnchor?.isActive = true
         songImageViewWidthAnchor?.isActive = true
@@ -194,7 +204,7 @@ class MusicPlayerViewController: UIViewController {
     
     private func setupPlaingButton() {
         self.view.addSubview(plaingButton)
-        plaingButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -24).isActive = true
+        plaingButton.topAnchor.constraint(equalTo: songSlider.bottomAnchor, constant:16).isActive = true
         plaingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         plaingButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
         plaingButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
@@ -233,14 +243,14 @@ class MusicPlayerViewController: UIViewController {
     
     private func setupSongSlider() {
         self.view.addSubview(songSlider)
-        songSlider.bottomAnchor.constraint(equalTo: plaingButton.topAnchor, constant: -32).isActive = true
+        songSlider.topAnchor.constraint(equalTo: songNameLable.bottomAnchor, constant: 16).isActive = true
         songSlider.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
         songSlider.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
     }
     
     private func setupSongNameLable() {
         self.view.addSubview(songNameLable)
-        songNameLable.bottomAnchor.constraint(equalTo: songSlider.topAnchor, constant: -16).isActive = true
+        songNameLable.topAnchor.constraint(equalTo: songImageView.bottomAnchor, constant: 16).isActive = true
         songNameLable.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
     }
 }
