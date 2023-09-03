@@ -26,17 +26,27 @@ class SongListViewController: UIViewController {
         return activity
     }()
     
-    private lazy var songTableView = UITableView(frame: .zero, style: .plain)
+    private lazy var songTableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = UIColor(named: "backgroundColor")
+        tableView.separatorStyle = .none
+        tableView.register(SongViewCell.self, forCellReuseIdentifier: SongViewCell.className)
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     
     // MARK: - Private Properties
     
     private let output: SongListViewOutput
     private var collection: Collection?
     
+    // MARK: - Constraints
+    
     private var albomImageViewTopAnchor: NSLayoutConstraint?
+    private var albomImageViewcenterXAnchor: NSLayoutConstraint?
+    private var albomImageViewcenterYAnchor: NSLayoutConstraint?
     private var albomImageViewLeadingAnchor: NSLayoutConstraint?
-    private var albomImageViewTrailingAnchor: NSLayoutConstraint?
-    private var albomImageViewBottomAnchor: NSLayoutConstraint?
     private var albomImageViewWidthAnchor: NSLayoutConstraint?
     private var albomImageViewHeightAnchor: NSLayoutConstraint?
     
@@ -61,7 +71,7 @@ class SongListViewController: UIViewController {
         setupUI()
         activityIndicator.startAnimating()
         requestData()
-    
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -72,75 +82,51 @@ class SongListViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-           let orientation = windowScene.interfaceOrientation
+        let orientation = windowScene.interfaceOrientation
         
         if orientation == .landscapeLeft || orientation == .landscapeRight {
-            
-            UIView.animate(withDuration: 5) {
+            coordinator.animate { [weak self] _ in
+                guard let self = self else {return}
                 
+                self.albomImageViewTopAnchor?.isActive = false
+                self.albomImageViewcenterXAnchor?.isActive = false
                 self.songTableViewViewTopAnchor?.isActive = false
                 self.songTableViewViewLeadingAnchor?.isActive = false
-                self.songTableViewViewTrailingAnchor?.isActive = false
-                self.songTableViewViewBottomAnchor?.isActive = false
-                self.albomImageViewTopAnchor?.isActive = false
-                self.albomImageViewLeadingAnchor?.isActive = false
-                self.albomImageViewTrailingAnchor?.isActive = false
-                self.albomImageViewHeightAnchor?.isActive = false
                 
-                self.albomImageViewTopAnchor?.constant = 64
-                self.albomImageViewBottomAnchor = self.albomImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -64)
-                self.albomImageViewLeadingAnchor?.constant = 16
-                self.albomImageViewWidthAnchor = self.albomImageView.widthAnchor.constraint(equalTo: self.albomImageView.heightAnchor)
-
-                self.songTableViewViewTopAnchor = self.songTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16)
+                self.albomImageViewcenterYAnchor?.isActive = true
+                self.albomImageViewLeadingAnchor?.isActive = true
+                
+                self.songTableViewViewTopAnchor = self.songTableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 16)
                 self.songTableViewViewLeadingAnchor = self.songTableView.leadingAnchor.constraint(equalTo: self.albomImageView.trailingAnchor)
                 
-                self.albomImageViewBottomAnchor?.isActive = true
-                self.albomImageViewWidthAnchor?.isActive = true
-                self.albomImageViewTopAnchor?.isActive = true
-                self.albomImageViewLeadingAnchor?.isActive = true
                 self.songTableViewViewTopAnchor?.isActive = true
                 self.songTableViewViewLeadingAnchor?.isActive = true
-                self.songTableViewViewTrailingAnchor?.isActive = true
-                self.songTableViewViewBottomAnchor?.isActive = true
-                
-                self.view.layoutIfNeeded()
             }
             
         } else if orientation == .portrait {
             
-            UIView.animate(withDuration: 5) {
+            coordinator.animate { [weak self] _ in
+                guard let self = self else {return}
                 
-                self.albomImageViewBottomAnchor?.isActive = false
-                self.albomImageViewWidthAnchor?.isActive = false
-                self.albomImageViewTopAnchor?.isActive = false
+                self.albomImageViewcenterYAnchor?.isActive = false
                 self.albomImageViewLeadingAnchor?.isActive = false
+                
                 self.songTableViewViewTopAnchor?.isActive = false
                 self.songTableViewViewLeadingAnchor?.isActive = false
-                self.songTableViewViewTrailingAnchor?.isActive = false
-                self.songTableViewViewBottomAnchor?.isActive = false
                 
-                self.albomImageViewTopAnchor?.constant = 8
-                self.albomImageViewLeadingAnchor?.constant = 64
-                self.albomImageViewTrailingAnchor = self.albomImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -64)
-//                self.albomImageViewHeightAnchor = self.albomImageView.heightAnchor.constraint(equalToConstant: 250)
+                self.albomImageViewTopAnchor?.isActive = true
+                self.albomImageViewcenterXAnchor?.isActive = true
                 
                 self.songTableViewViewTopAnchor = self.songTableView.topAnchor.constraint(equalTo: self.albomImageView.bottomAnchor, constant: 16)
                 self.songTableViewViewLeadingAnchor = self.songTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
                 
-                self.albomImageViewTopAnchor?.isActive = true
-                self.albomImageViewLeadingAnchor?.isActive = true
-                self.albomImageViewTrailingAnchor?.isActive = true
-                self.albomImageViewHeightAnchor?.isActive = true
                 self.songTableViewViewTopAnchor?.isActive = true
                 self.songTableViewViewLeadingAnchor?.isActive = true
-                self.songTableViewViewTrailingAnchor?.isActive = true
-                self.songTableViewViewBottomAnchor?.isActive = true
                 
-                self.view.layoutIfNeeded()
+                
             }
         }
-
+        
     }
     
     // MARK: - Private Methods
@@ -181,21 +167,21 @@ class SongListViewController: UIViewController {
     private func setupAlbomImageView() {
         albomImageView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(albomImageView)
-        
         albomImageViewTopAnchor = albomImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8)
-        albomImageViewLeadingAnchor = albomImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 64)
-        albomImageViewTrailingAnchor = albomImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -64)
-        albomImageViewHeightAnchor = albomImageView.heightAnchor.constraint(equalTo: albomImageView.widthAnchor)
+        albomImageViewcenterXAnchor = albomImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        albomImageViewHeightAnchor = albomImageView.heightAnchor.constraint(equalToConstant: 250)
+        albomImageViewWidthAnchor = albomImageView.widthAnchor.constraint(equalToConstant: 250)
+        albomImageViewLeadingAnchor = albomImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16)
+        albomImageViewcenterYAnchor = albomImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         albomImageViewTopAnchor?.isActive = true
-        albomImageViewLeadingAnchor?.isActive = true
-        albomImageViewTrailingAnchor?.isActive = true
+        albomImageViewcenterXAnchor?.isActive = true
+        albomImageViewWidthAnchor?.isActive = true
         albomImageViewHeightAnchor?.isActive = true
     }
     
     private func setupSongTableView() {
         songTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(songTableView)
-        
         songTableViewViewTopAnchor = songTableView.topAnchor.constraint(equalTo: albomImageView.bottomAnchor, constant: 16)
         songTableViewViewLeadingAnchor = songTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         songTableViewViewTrailingAnchor = songTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -204,12 +190,6 @@ class SongListViewController: UIViewController {
         songTableViewViewLeadingAnchor?.isActive = true
         songTableViewViewTrailingAnchor?.isActive = true
         songTableViewViewBottomAnchor?.isActive = true
-        
-        songTableView.backgroundColor = UIColor(named: "backgroundColor")
-        songTableView.separatorStyle = .none
-        songTableView.register(SongViewCell.self, forCellReuseIdentifier: SongViewCell.className)
-        songTableView.delegate = self
-        songTableView.dataSource = self
     }
     
     private func setupActivityIndicator() {
